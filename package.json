@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-material_ui-boilerplate",
+  "name": "react-redux-material_ui-sample-app",
   "version": "1.0.0",
-  "description": "A boilerplate for React + Redux + Material UI + ES6 syntax application",
+  "description": "React + Redux + Material UI + ES6 syntax application",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,12 +19,8 @@
     "Bable",
     "ES6"
   ],
-  "author": "https://github.com/takanabe",
+  "author": "https://github.com/lekzd",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/takanabe/react-redux-material_ui-boilerplate/issues"
-  },
-  "homepage": "",
   "devDependencies": {
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",

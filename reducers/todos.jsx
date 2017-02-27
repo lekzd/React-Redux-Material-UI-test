@@ -1,12 +1,33 @@
 import { ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED } from '../constants/ActionTypes';
 
-const initialState = [{
-  text: 'Use Redux',
-  completed: false,
-  id: 0
-}];
+const descriptors = Object.getOwnPropertyDescriptors(window);
 
-export default function todos(state = initialState, action) {
+const getRandomItem = (name, id) => {
+  const flags = [];
+  if (descriptors[name].configurable) {
+    flags.push('configurable');
+  }
+  if (descriptors[name].enumerable) {
+    flags.push('enumerable');
+  }
+  if (descriptors[name].writable) {
+    flags.push('writable');
+  }
+  return {
+    id,
+    name,
+    completed: false,
+    flags
+  }
+};
+
+const items = Object.keys(descriptors)
+    .sort(() => Math.random() * 2|0)
+    .map(getRandomItem)
+    .slice(0, 200);
+
+
+export default function todos(state = items, action) {
   switch (action.type) {
   case ADD_TODO:
     return [{

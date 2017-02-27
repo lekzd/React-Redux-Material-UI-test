@@ -4,11 +4,6 @@ import Footer from './Footer';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
 
-const defaultStyle = {
-  width: 300,
-  marginLeft: 20
-};
-
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
   [SHOW_ACTIVE]: todo => !todo.completed,
@@ -45,48 +40,46 @@ class MainSection extends Component {
     }
   }
 
-  renderFooter(completedCount) {
-    const { todos } = this.props;
-    const { filter } = this.state;
-    const activeCount = todos.length - completedCount;
-
-    if (todos.length) {
-      return (
-        <Footer completedCount={completedCount}
-                activeCount={activeCount}
-                filter={filter}
-                onClearCompleted={this.handleClearCompleted.bind(this)}
-                onShow={this.handleShow.bind(this)} />
-      );
-    }
-  }
-
   render() {
-    const { todos, actions } = this.props;
+    const { left, right, actions } = this.props;
     const { filter } = this.state;
 
-    const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-    const completedCount = todos.reduce((count, todo) =>
-      todo.completed ? count + 1 : count,
-      0
-    );
+    // const filteredTodos = todos.filter(TODO_FILTERS[filter]);
+    // const completedCount = todos.reduce((count, todo) =>
+    //   todo.completed ? count + 1 : count,
+    //   0
+    // );
 
     return (
-      <section className="main" style={defaultStyle}>
-        {this.renderToggleAll(completedCount)}
-        <List className="todo-list">
-          {filteredTodos.map(todo =>
-            <TodoItem key={todo.id} todo={todo} {...actions} />
-          )}
-        </List>
-        {this.renderFooter(completedCount)}
+      <section className="main">
+        {/*{this.renderToggleAll(completedCount)}*/}
+
+        <div className="column left">
+          <List className="todo-list">
+            {left.map(todo =>
+                <TodoItem key={todo.id} todo={todo} {...actions} />
+            )}
+          </List>
+        </div>
+        <div className="column center">
+          selected item
+        </div>
+        <div className="column right">
+          <List className="todo-list">
+            {right.map(todo =>
+                <TodoItem key={todo.id} todo={todo} {...actions} />
+            )}
+          </List>
+        </div>
+
       </section>
     );
   }
 }
 
 MainSection.propTypes = {
-  todos: PropTypes.array.isRequired,
+  left: PropTypes.array.isRequired,
+  right: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 

@@ -6,4 +6,52 @@ body {
   font-size: 13px;
   line-height: 20px;
   margin: 0px;
+  background: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 50px auto;
+}
+
+.column {
+  display: flex;
+}
+
+.column.left,
+.column.right {
+  padding: 15px;
+  border: 1px solid #ebebeb;
+  box-shadow: 1px 1px 1px #cdcdcd;
+  width: 30%;
+  background: #fff;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.todo-list {
+  width: 100%;
+}
+
+.item {
+  user-select: none;
+}
+
+.item-icons {
+  display: flex;
+  flex-direction: row;
+}
+
+.item-icons svg {
+  display: inline-block;
 }

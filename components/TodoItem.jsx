@@ -4,9 +4,15 @@ import TodoTextInput from './TodoTextInput';
 import { ListItem, IconButton, IconMenu, MenuItem } from 'material-ui';
 import { grey400 } from 'material-ui/styles/colors'
 
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import CheckBoxIcon from 'material-ui/svg-icons/toggle/check-box';
-import CheckBoxBlankIcon from 'material-ui/svg-icons/toggle/check-box-outline-blank';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
+import VisibleIcon from 'material-ui/svg-icons/action/visibility';
+
+const ICONS = {
+  'configurable': <SettingsIcon color={grey400} />,
+  'enumerable': <VisibleIcon color={grey400} />,
+  'writable': <EditIcon color={grey400} />
+};
 
 class TodoItem extends Component {
   constructor(props, context) {
@@ -29,48 +35,31 @@ class TodoItem extends Component {
     this.setState({ editing: false });
   }
 
+  getFlags(flags) {
+    const style = {
+      width: 75,
+      textAlign: 'right'
+    };
+
+    return <div className="item-icons" style={style}>
+        {flags.map((flagItem) => ICONS[flagItem])}
+      </div>
+  }
+
   render() {
     const { todo, completeTodo, deleteTodo } = this.props;
 
-    const rightIconMenu = (
-      <IconMenu iconButtonElement={
-          <IconButton>
-            <MoreVertIcon color={grey400} />
-          </IconButton>
-        }
-      >
-        <MenuItem primaryText="Edit" onTouchTap={this.handleEdit.bind(this)}/>
-        <MenuItem primaryText="Delete" onTouchTap={() => deleteTodo(todo.id)}/>
-      </IconMenu>
-    );
-
-    let element;
-    if (this.state.editing) {
-      element = (
-        <TodoTextInput text={todo.text}
-                      editing={this.state.editing}
-                      onSave={(text) => this.handleSave(todo.id, text)} />
-      );
-    } else {
-      element = (
-        <ListItem primaryText={todo.text}
-                  onTouchTap={() => completeTodo(todo.id)}
-                  leftIcon={todo.completed ? <CheckBoxIcon /> : <CheckBoxBlankIcon />}
-                  rightIconButton={rightIconMenu}
-        />
-      );
-    }
-
     return (
-      <div className={classnames({
-          completed: todo.completed,
-          editing: this.state.editing
-        })}>
-        {element}
+      <div className="item">
+        <ListItem
+            primaryText={todo.name}
+            rightIcon={this.getFlags(todo.flags)}
+        />
       </div>
     );
   }
 }
+
 
 TodoItem.propTypes = {
   todo: PropTypes.object.isRequired,

@@ -13,18 +13,20 @@ import theme from '../src/material_ui_raw_theme_file'
 class App extends Component {
   render() {
     const { todos, actions } = this.props;
+    const leftItems = todos.slice(0, 100);
+    const rightItems = todos.slice(100);
     return (
       <div>
         <MuiThemeProvider muiTheme={theme}>
           <div>
-            <Header addTodo={actions.addTodo}/>
-            <MainSection todos={todos} actions={actions}/>
+            <MainSection left={leftItems} right={rightItems} actions={actions}/>
           </div>
         </MuiThemeProvider>
       </div>
     );
   }
 }
+
 
 App.propTypes = {
   todos: PropTypes.array.isRequired,
