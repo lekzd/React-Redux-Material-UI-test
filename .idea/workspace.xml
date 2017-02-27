@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a41d76d-9d86-478f-8832-515f91acef97" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/components/Footer.jsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/components/Header.jsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/components/TodoTextInput.jsx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/components/MainSection.jsx" afterPath="$PROJECT_DIR$/components/MainSection.jsx" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/react-redux-material_ui-boilerplate.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -100,14 +103,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainSection.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainSection.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/components/MainSection.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="61" column="34" lean-forward="true" selection-start-line="61" selection-start-column="34" selection-end-line="61" selection-end-column="34" />
+            <state relative-caret-position="202">
+              <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding>
                 <element signature="e#0#52#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,6 +160,7 @@
         <option value="$PROJECT_DIR$/reducers/index.jsx" />
         <option value="$PROJECT_DIR$/reducers/itemsGenerator.jsx" />
         <option value="$PROJECT_DIR$/components/MainSection.jsx" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -426,7 +440,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1488222557527</updated>
-      <workItem from="1488222559399" duration="15225000" />
+      <workItem from="1488222559399" duration="15323000" />
     </task>
     <task id="LOCAL-00001" summary="init lists using window constants">
       <created>1488229246156</created>
@@ -442,11 +456,18 @@
       <option name="project" value="LOCAL" />
       <updated>1488237117584</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="item selecting">
+      <created>1488237814036</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1488237814036</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15225000" />
+    <option name="totallyTimeSpent" value="15323000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
@@ -481,7 +502,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init lists using window constants" />
     <MESSAGE value="different reducers for different list" />
-    <option name="LAST_COMMIT_MESSAGE" value="different reducers for different list" />
+    <MESSAGE value="item selecting" />
+    <option name="LAST_COMMIT_MESSAGE" value="item selecting" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -647,11 +669,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/components/MainSection.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="61" column="34" lean-forward="true" selection-start-line="61" selection-start-column="34" selection-end-line="61" selection-end-column="34" />
+        <state relative-caret-position="202">
+          <caret line="54" column="0" lean-forward="true" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
           <folding>
             <element signature="e#0#52#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
