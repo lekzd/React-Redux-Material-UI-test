@@ -41,6 +41,18 @@ class MainSection extends Component {
     )
   }
 
+  selectItem(selected) {
+    this.setState({ selected })
+  }
+
+  renderSelected(item) {
+    return (
+        <div>
+          <TodoItem key={item.id} item={item} selectItem={null} />
+        </div>
+    )
+  }
+
   render() {
     const { left, right, actions } = this.props;
     const { filter, selected } = this.state;
@@ -57,18 +69,18 @@ class MainSection extends Component {
           <List className="todo-list">
             {this.renderSortSearch(left)}
             {left.map(item =>
-                <TodoItem key={item.id} item={item} {...actions} />
+                <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
             )}
           </List>
         </div>
         <div className="column center">
-          {selected ? selected : '...select item...'}
+          {selected ? this.renderSelected(selected) : '...select item...'}
         </div>
         <div className="column right">
           <List className="todo-list">
             {this.renderFlagsFilter(right)}
             {right.map(item =>
-                <TodoItem key={item.id} item={item} {...actions} />
+                <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
             )}
           </List>
         </div>
