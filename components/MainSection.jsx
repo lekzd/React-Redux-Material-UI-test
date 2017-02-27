@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import TodoItem from './TodoItem';
-import Footer from './Footer';
+import Subheader from 'material-ui/Subheader';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
 
@@ -13,36 +13,37 @@ const TODO_FILTERS = {
 class MainSection extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { filter: SHOW_ALL };
+    this.state = {
+      filter: SHOW_ALL,
+      selected: null
+    };
   }
 
-  handleClearCompleted() {
-    const atLeastOneCompleted = this.props.todos.some(todo => todo.completed);
-    if (atLeastOneCompleted) {
-      this.props.actions.clearCompleted();
-    }
+  renderSortSearch(items) {
+    const { actions } = this.props;
+    let checked = false;
+    return (
+      <Subheader>
+        <Checkbox
+          className="toggle-sort"
+          label="Sort"
+          defaultChecked={checked}
+          onCheck={() => actions.toggleSort(checked = !checked)} />
+      </Subheader>
+    )
   }
 
-  handleShow(filter) {
-    this.setState({ filter });
-  }
-
-  renderToggleAll(completedCount) {
-    const { todos, actions } = this.props;
-    if (todos.length > 0) {
-      return (
-        <Checkbox className="toggle-all"
-                  style={{marginBottom: 10}}
-                  label="Toggle All"
-                  defaultChecked={completedCount === todos.length}
-                  onCheck={actions.completeAll} />
-      );
-    }
+  renderFlagsFilter(items) {
+    return (
+      <Subheader>
+        flags
+      </Subheader>
+    )
   }
 
   render() {
     const { left, right, actions } = this.props;
-    const { filter } = this.state;
+    const { filter, selected } = this.state;
 
     // const filteredTodos = todos.filter(TODO_FILTERS[filter]);
     // const completedCount = todos.reduce((count, todo) =>
@@ -52,22 +53,22 @@ class MainSection extends Component {
 
     return (
       <section className="main">
-        {/*{this.renderToggleAll(completedCount)}*/}
-
         <div className="column left">
           <List className="todo-list">
-            {left.map(todo =>
-                <TodoItem key={todo.id} todo={todo} {...actions} />
+            {this.renderSortSearch(left)}
+            {left.map(item =>
+                <TodoItem key={item.id} item={item} {...actions} />
             )}
           </List>
         </div>
         <div className="column center">
-          selected item
+          {selected ? selected : '...select item...'}
         </div>
         <div className="column right">
           <List className="todo-list">
-            {right.map(todo =>
-                <TodoItem key={todo.id} todo={todo} {...actions} />
+            {this.renderFlagsFilter(right)}
+            {right.map(item =>
+                <TodoItem key={item.id} item={item} {...actions} />
             )}
           </List>
         </div>
@@ -77,6 +78,7 @@ class MainSection extends Component {
   }
 }
 
+
 MainSection.propTypes = {
   left: PropTypes.array.isRequired,
   right: PropTypes.array.isRequired,
@@ -84,3 +86,4 @@ MainSection.propTypes = {
 };
 
 export default MainSection;
+

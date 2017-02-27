@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
 import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions/todos';
 
@@ -12,9 +11,7 @@ import theme from '../src/material_ui_raw_theme_file'
 
 class App extends Component {
   render() {
-    const { todos, actions } = this.props;
-    const leftItems = todos.slice(0, 100);
-    const rightItems = todos.slice(100);
+    const { leftItems, rightItems, actions } = this.props;
     return (
       <div>
         <MuiThemeProvider muiTheme={theme}>
@@ -27,15 +24,16 @@ class App extends Component {
   }
 }
 
-
 App.propTypes = {
-  todos: PropTypes.array.isRequired,
+  leftItems: PropTypes.array.isRequired,
+  rightItems: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    leftItems: state.leftItems,
+    rightItems: state.rightItems
   };
 }
 

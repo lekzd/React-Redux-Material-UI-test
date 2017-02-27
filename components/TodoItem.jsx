@@ -1,17 +1,31 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import TodoTextInput from './TodoTextInput';
-import { ListItem, IconButton, IconMenu, MenuItem } from 'material-ui';
+import { ListItem, IconButton } from 'material-ui';
 import { grey400 } from 'material-ui/styles/colors'
 
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import VisibleIcon from 'material-ui/svg-icons/action/visibility';
 
+const buttonStyle = {
+  border: 'none',
+  padding: 0,
+  width: 25,
+  height: 25
+};
+
 const ICONS = {
-  'configurable': <SettingsIcon color={grey400} />,
-  'enumerable': <VisibleIcon color={grey400} />,
-  'writable': <EditIcon color={grey400} />
+  'configurable':
+      <IconButton tooltip="configurable" style={buttonStyle}>
+        <SettingsIcon color={grey400} />
+      </IconButton>,
+  'enumerable':
+      <IconButton tooltip="enumerable" style={buttonStyle}>
+        <VisibleIcon color={grey400} />
+      </IconButton>,
+  'writable':
+      <IconButton tooltip="writable" style={buttonStyle}>
+        <EditIcon color={grey400} />
+      </IconButton>
 };
 
 class TodoItem extends Component {
@@ -20,19 +34,6 @@ class TodoItem extends Component {
     this.state = {
       editing: false
     };
-  }
-
-  handleEdit () {
-    this.setState({ editing: true });
-  }
-
-  handleSave(id, text) {
-    if (text.length === 0) {
-      this.props.deleteTodo(id);
-    } else {
-      this.props.editTodo(id, text);
-    }
-    this.setState({ editing: false });
   }
 
   getFlags(flags) {
@@ -47,13 +48,14 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { todo, completeTodo, deleteTodo } = this.props;
+    const { item, selectItem } = this.props;
 
     return (
       <div className="item">
         <ListItem
-            primaryText={todo.name}
-            rightIcon={this.getFlags(todo.flags)}
+            onTouchTap={() => selectItem(item)}
+            primaryText={item.name}
+            rightIcon={this.getFlags(item.flags)}
         />
       </div>
     );
@@ -62,10 +64,8 @@ class TodoItem extends Component {
 
 
 TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired,
-  editTodo: PropTypes.func.isRequired,
-  deleteTodo: PropTypes.func.isRequired,
-  completeTodo: PropTypes.func.isRequired
+  item: PropTypes.object.isRequired,
+  selectItem: PropTypes.func.isRequired
 };
 
 export default TodoItem;

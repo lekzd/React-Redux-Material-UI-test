@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import todos from './todos';
+import itemsGenerator from './itemsGenerator';
+import { SELECT_ITEM, SORT_ITEMS } from '../constants/ActionTypes';
 
 const rootReducer = combineReducers({
-    todos
+  leftItems: itemsGenerator(0, 100, [SELECT_ITEM, SORT_ITEMS]),
+  rightItems: itemsGenerator(100, 200, [SELECT_ITEM])
 });
 
 export default rootReducer;
