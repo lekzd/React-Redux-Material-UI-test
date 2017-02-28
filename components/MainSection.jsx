@@ -131,8 +131,9 @@ class MainSection extends Component {
     return (
       <section className="main">
         <div className="column left">
+          {this.renderSortSearch(left)}
+          <hr/>
           <List className="todo-list">
-            {this.renderSortSearch(left)}
             {leftFiltered.map(item =>
               <TodoItem
                   key={item.id}
@@ -147,8 +148,9 @@ class MainSection extends Component {
           {selected ? this.renderSelected(selected) : '...select item...'}
         </div>
         <div className="column right">
+          {this.renderFlagsFilter(right)}
+          <hr/>
           <List className="todo-list">
-            {this.renderFlagsFilter(right)}
             {rightFiltered.map(item =>
               <TodoItem
                   key={item.id}

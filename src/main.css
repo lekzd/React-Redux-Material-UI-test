@@ -25,6 +25,7 @@ body {
 
 .column {
   display: flex;
+  flex-direction: column;
 }
 
 .column.left,
@@ -35,19 +36,20 @@ body {
   width: 30%;
   background: #fff;
   max-height: calc(100vh - 100px);
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .todo-list {
   width: 100%;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .item {
   user-select: none;
 }
 .item.selected {
-  outline: 2px solid orange;
+  outline: 2px solid orange!important;
 }
 
 .item .item-icons {
