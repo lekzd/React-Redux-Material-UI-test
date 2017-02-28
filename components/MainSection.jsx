@@ -4,6 +4,7 @@ import Subheader from 'material-ui/Subheader';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
 import TextField from 'material-ui/TextField';
+import { FLAGS } from '../constants/FLAGS'
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
@@ -15,7 +16,7 @@ class MainSection extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      filter: SHOW_ALL,
+      flagsFilter: [],
       selected: null,
       sortDescending: false,
       search: null
@@ -32,6 +33,22 @@ class MainSection extends Component {
     this.setState({
       search: value
     });
+  }
+
+  selectItem(selected) {
+    if (this.state.selected === selected) {
+      this.setState({ selected: null })
+    } else {
+      this.setState({ selected })
+    }
+  }
+
+  toggleFlagFilter(flag) {
+    if (this.state.flagsFilter.includes(flag)) {
+      this.setState({ flagsFilter: this.state.flagsFilter.splice(this.state.flagsFilter.indexOf(flag), 1) });
+    } else {
+      this.setState({ flagsFilter: this.state.flagsFilter.concat([flag]) });
+    }
   }
 
   renderSortSearch(items) {
@@ -60,16 +77,24 @@ class MainSection extends Component {
     )
   }
 
-  renderFlagsFilter(items) {
+  getFlags(flags) {
+    const style = {
+      width: 75,
+      textAlign: 'right'
+    };
     return (
-      <Subheader>
-        flags
-      </Subheader>
+      <div className="item-icons" style={style}>
+        {flags.map(flagItem => FLAGS[flagItem])}
+      </div>
     )
   }
 
-  selectItem(selected) {
-    this.setState({ selected })
+  renderFlagsFilter(items) {
+    return (
+      <Subheader>
+          {this.getFlags(Object.keys(FLAGS))}
+      </Subheader>
+    )
   }
 
   renderSelected(item) {
@@ -80,21 +105,47 @@ class MainSection extends Component {
     )
   }
 
+  processLeftPipeLine(items) {
+      const { search, sortDescending } = this.state;
+      let results = items.slice(0);
+
+      if (search) {
+          results = results.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
+      }
+
+      if (sortDescending) {
+          results = results.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() );
+      } else {
+          results = results.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() );
+      }
+
+      return results;
+  }
+
+  processRightPipeLine(items) {
+      const { flagsFilter } = this.state;
+      let results = items.slice(0);
+
+      if (Array.isArray(flagsFilter) && flagsFilter.length) {
+          rightFiltered = rightFiltered.filter((item) => {
+              let isMatched = true;
+              flagsFilter.forEach((flag) => {
+                  if (!item.flags.includes(flag)) {
+                      isMatched = false;
+                  }
+              });
+              return isMatched;
+          });
+      }
+      return results;
+  }
+
   render() {
-    const { left, right, actions } = this.props;
-    const { search, selected, sortDescending } = this.state;
+    const { left, right } = this.props;
+    const { selected } = this.state;
 
-    let leftFiltered = [];
-
-    if (sortDescending) {
-        leftFiltered = left.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() );
-    } else {
-        leftFiltered = left.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() );
-    }
-
-    if (search) {
-        leftFiltered = leftFiltered.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
-    }
+    let leftFiltered = this.processLeftPipeLine(left);
+    let rightFiltered = this.processRightPipeLine(right);
 
     return (
       <section className="main">
@@ -112,7 +163,7 @@ class MainSection extends Component {
         <div className="column right">
           <List className="todo-list">
             {this.renderFlagsFilter(right)}
-            {right.map(item =>
+            {rightFiltered.map(item =>
               <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
             )}
           </List>
