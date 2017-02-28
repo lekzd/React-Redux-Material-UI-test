@@ -3,6 +3,7 @@ import TodoItem from './TodoItem';
 import Subheader from 'material-ui/Subheader';
 import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
+import TextField from 'material-ui/TextField';
 
 const TODO_FILTERS = {
   [SHOW_ALL]: () => true,
@@ -15,20 +16,46 @@ class MainSection extends Component {
     super(props, context);
     this.state = {
       filter: SHOW_ALL,
-      selected: null
+      selected: null,
+      sortDescending: false,
+      search: null
     };
+  }
+
+  toggleSort() {
+    this.setState({
+      sortDescending: !this.state.sortDescending
+    });
+  }
+
+  onSearchChange(event, value) {
+    this.setState({
+      search: value
+    });
   }
 
   renderSortSearch(items) {
     const { actions } = this.props;
-    let checked = false;
     return (
-      <Subheader>
-        <Checkbox
-          className="toggle-sort"
-          label="Sort"
-          defaultChecked={checked}
-          onCheck={() => actions.toggleSort(checked = !checked)} />
+      <Subheader className="column-subheader">
+
+        <div className="column-subheader-col">
+          <Checkbox
+            className="toggle-sort"
+            label="Sort"
+            defaultChecked={this.state.sortDescending}
+            onCheck={() => this.toggleSort()}
+          />
+        </div>
+
+        <div className="column-subheader-col">
+          <TextField
+            hintText="Search..."
+            defaultValue={this.state.search}
+            onChange={this.onSearchChange.bind(this)}
+          />
+        </div>
+
       </Subheader>
     )
   }
@@ -55,21 +82,27 @@ class MainSection extends Component {
 
   render() {
     const { left, right, actions } = this.props;
-    const { filter, selected } = this.state;
+    const { search, selected, sortDescending } = this.state;
 
-    // const filteredTodos = todos.filter(TODO_FILTERS[filter]);
-    // const completedCount = todos.reduce((count, todo) =>
-    //   todo.completed ? count + 1 : count,
-    //   0
-    // );
+    let leftFiltered = [];
+
+    if (sortDescending) {
+        leftFiltered = left.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() );
+    } else {
+        leftFiltered = left.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() );
+    }
+
+    if (search) {
+        leftFiltered = leftFiltered.filter(({ name }) => name.toLowerCase().includes(search.toLowerCase()))
+    }
 
     return (
       <section className="main">
         <div className="column left">
           <List className="todo-list">
             {this.renderSortSearch(left)}
-            {left.map(item =>
-                <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
+            {leftFiltered.map(item =>
+              <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
             )}
           </List>
         </div>
@@ -80,7 +113,7 @@ class MainSection extends Component {
           <List className="todo-list">
             {this.renderFlagsFilter(right)}
             {right.map(item =>
-                <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
+              <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
             )}
           </List>
         </div>

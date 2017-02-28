@@ -55,3 +55,20 @@ body {
 .item-icons svg {
   display: inline-block;
 }
+
+.column-subheader {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+.column-subheader-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.column-subheader-col + .column-subheader-col {
+  margin-left: 20px;
+}
