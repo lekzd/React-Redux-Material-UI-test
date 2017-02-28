@@ -1,16 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import TodoItem from './TodoItem';
+import FlagsList from './FlagsList';
 import Subheader from 'material-ui/Subheader';
-import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters';
 import { Checkbox, List } from 'material-ui';
 import TextField from 'material-ui/TextField';
 import { FLAGS } from '../constants/FLAGS'
-
-const TODO_FILTERS = {
-  [SHOW_ALL]: () => true,
-  [SHOW_ACTIVE]: todo => !todo.completed,
-  [SHOW_COMPLETED]: todo => todo.completed
-};
 
 class MainSection extends Component {
   constructor(props, context) {
@@ -43,12 +37,8 @@ class MainSection extends Component {
     }
   }
 
-  toggleFlagFilter(flag) {
-    if (this.state.flagsFilter.includes(flag)) {
-      this.setState({ flagsFilter: this.state.flagsFilter.splice(this.state.flagsFilter.indexOf(flag), 1) });
-    } else {
-      this.setState({ flagsFilter: this.state.flagsFilter.concat([flag]) });
-    }
+  toggleFlagFilter(flagsFilter) {
+    this.setState({ flagsFilter });
   }
 
   renderSortSearch(items) {
@@ -77,22 +67,13 @@ class MainSection extends Component {
     )
   }
 
-  getFlags(flags) {
-    const style = {
-      width: 75,
-      textAlign: 'right'
-    };
-    return (
-      <div className="item-icons" style={style}>
-        {flags.map(flagItem => FLAGS[flagItem])}
-      </div>
-    )
-  }
-
   renderFlagsFilter(items) {
     return (
       <Subheader>
-          {this.getFlags(Object.keys(FLAGS))}
+          <FlagsList
+              flags={Object.keys(FLAGS)}
+              onSelect={this.toggleFlagFilter.bind(this)}
+          />
       </Subheader>
     )
   }
@@ -127,7 +108,7 @@ class MainSection extends Component {
       let results = items.slice(0);
 
       if (Array.isArray(flagsFilter) && flagsFilter.length) {
-          rightFiltered = rightFiltered.filter((item) => {
+          results = results.filter((item) => {
               let isMatched = true;
               flagsFilter.forEach((flag) => {
                   if (!item.flags.includes(flag)) {
@@ -153,7 +134,12 @@ class MainSection extends Component {
           <List className="todo-list">
             {this.renderSortSearch(left)}
             {leftFiltered.map(item =>
-              <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
+              <TodoItem
+                  key={item.id}
+                  item={item}
+                  selectItem={() => this.selectItem(item)}
+                  selected={selected === item}
+              />
             )}
           </List>
         </div>
@@ -164,7 +150,12 @@ class MainSection extends Component {
           <List className="todo-list">
             {this.renderFlagsFilter(right)}
             {rightFiltered.map(item =>
-              <TodoItem key={item.id} item={item} selectItem={() => this.selectItem(item)} />
+              <TodoItem
+                  key={item.id}
+                  item={item}
+                  selectItem={() => this.selectItem(item)}
+                  selected={selected === item}
+              />
             )}
           </List>
         </div>

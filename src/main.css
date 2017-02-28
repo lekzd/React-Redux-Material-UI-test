@@ -46,10 +46,17 @@ body {
 .item {
   user-select: none;
 }
+.item.selected {
+  outline: 2px solid orange;
+}
 
-.item-icons {
-  display: flex;
-  flex-direction: row;
+.item .item-icons {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto 0;
+  height: 25px;
 }
 
 .item-icons svg {

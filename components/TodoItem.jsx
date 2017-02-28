@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 import { ListItem } from 'material-ui';
-import { FLAGS } from '../constants/FLAGS'
+import FlagsList from './FlagsList';
 
 class TodoItem extends Component {
   constructor(props, context) {
@@ -10,30 +11,20 @@ class TodoItem extends Component {
     };
   }
 
-  getFlags(flags) {
-    const style = {
-      width: 75,
-      textAlign: 'right'
-    };
-
-    return (
-      <div className="item-icons" style={style}>
-        {flags.map((flagItem) => FLAGS[flagItem])}
-      </div>
-    )
-  }
-
   render() {
-    const { item, selectItem } = this.props;
+    const { item, selectItem, selected } = this.props;
+    const classNames = classnames({
+      item: true,
+      selected
+    });
 
     return (
-      <div className="item">
         <ListItem
+            className={classNames}
             onTouchTap={() => selectItem(item)}
             primaryText={item.name}
-            rightIcon={this.getFlags(item.flags)}
+            rightIcon={<FlagsList flags={item.flags} />}
         />
-      </div>
     );
   }
 }
@@ -41,7 +32,8 @@ class TodoItem extends Component {
 
 TodoItem.propTypes = {
   item: PropTypes.object.isRequired,
-  selectItem: PropTypes.func.isRequired
+  selectItem: PropTypes.func.isRequired,
+  selected: PropTypes.bool
 };
 
 export default TodoItem;

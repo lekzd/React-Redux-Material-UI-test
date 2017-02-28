@@ -24,25 +24,8 @@ const items = Object.keys(descriptors)
     .sort(() => Math.random() * 2|0)
     .map(getRandomItem);
 
-export default function itemsGenerator(from, to, allowed) {
+export default function itemsGenerator(from, to) {
   return (state = items.slice(from, to), {type, value}) => {
-    if (!allowed.includes(type)) {
-      return state;
-    }
-    switch (type) {
-      case SELECT_ITEM:
-        state.selected = value;
-        return state;
-
-      case SORT_ITEMS:
-        if (value) {
-          return state.sort((a, b) => a.name < b.name ).slice(0);
-        } else {
-          return state.sort((a, b) => a.name > b.name ).slice(0);
-        }
-
-      default:
-        return state;
-    }
+    return state;
   }
 }
