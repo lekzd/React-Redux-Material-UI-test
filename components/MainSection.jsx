@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import TodoItem from './TodoItem';
 import FlagsList from './FlagsList';
+import SelectedItem from './SelectedItem';
 import Subheader from 'material-ui/Subheader';
 import { Checkbox, List } from 'material-ui';
 import TextField from 'material-ui/TextField';
@@ -78,14 +79,6 @@ class MainSection extends Component {
     )
   }
 
-  renderSelected(item) {
-    return (
-        <div>
-          <TodoItem key={item.id} item={item} selectItem={null} />
-        </div>
-    )
-  }
-
   processLeftPipeLine(items) {
       const { search, sortDescending } = this.state;
       let results = items.slice(0);
@@ -145,7 +138,7 @@ class MainSection extends Component {
           </List>
         </div>
         <div className="column center">
-          {selected ? this.renderSelected(selected) : '...select item...'}
+          {selected ? (<SelectedItem item={selected} />) : '...select item...'}
         </div>
         <div className="column right">
           {this.renderFlagsFilter(right)}

@@ -28,6 +28,32 @@ body {
   flex-direction: column;
 }
 
+.column.center {
+  min-width: 300px;
+  text-align: center;
+}
+
+.selected-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ebebeb;
+  box-shadow: 1px 1px 1px #cdcdcd;
+}
+
+.selected-item > div {
+  text-align: center;
+  margin: auto;
+  font-size: 18px;
+}
+
+.selected-item > div + div {
+  border-top: 1px solid #cdcdcd;
+  margin-top: 15px;
+}
+
 .column.left,
 .column.right {
   padding: 15px;
