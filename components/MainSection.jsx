@@ -88,9 +88,9 @@ class MainSection extends Component {
       }
 
       if (sortDescending) {
-          results = results.sort((a, b) => a.name.toLowerCase() < b.name.toLowerCase() );
+          results = results.sort((a, b) => (a.name.toLowerCase() < b.name.toLowerCase())? 1 : -1 );
       } else {
-          results = results.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() );
+          results = results.sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase())? 1 : -1 );
       }
 
       return results;
